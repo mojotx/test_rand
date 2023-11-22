@@ -2,14 +2,11 @@ package main
 
 import (
 	"fmt"
-	"math/big"
 	"os"
 
 	resultPkg "github.com/mojotx/test_rand/pkg/result"
 	"github.com/montanaflynn/stats"
 )
-
-var limit = big.NewInt(100)
 
 func main() {
 
@@ -17,9 +14,9 @@ func main() {
 
 	for n := 0; n < 1000; n++ {
 
-		result := resultPkg.DoWork()
-		values = append(values, result.ChallengePercent)
-		resultPkg.CheckResult(os.Stderr, n, result)
+		r := resultPkg.DoWork()
+		values = append(values, r.ChallengePercent)
+		resultPkg.CheckResult(os.Stderr, n, r)
 	}
 
 	// mean or average
