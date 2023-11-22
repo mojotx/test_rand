@@ -1,5 +1,7 @@
 # Random Number Distribution Test
 
+[![Generate code coverage badge](https://github.com/mojotx/test_rand/actions/workflows/coverage.yaml/badge.svg?branch=main)](https://github.com/mojotx/test_rand/actions/workflows/coverage.yaml)
+
 ## Summary
 
 For 1000 iterations, calculate a random number between 0-99, and if the
