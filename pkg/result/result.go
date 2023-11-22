@@ -61,12 +61,14 @@ func DoWork() Result {
 	}
 }
 
-func CheckResult(w io.Writer, n int, result Result) {
+func CheckResult(w io.Writer, n int, r Result) {
 
-	if result.ChallengePercent <= 20.0 {
+	//fmt.Fprintf(w, "\x1b[1;30m%+v\x1b[0m\n", r)
+	if r.ChallengePercent <= 20.0 {
+
 		fmt.Fprintf(w, "%d: %d (%f%%) - %d (%f%%) - %d - %d\n", n,
-			result.Champion, result.ChampionPercent,
-			result.Challenge, result.ChallengePercent,
-			result.Min, result.Max)
+			r.Champion, r.ChampionPercent,
+			r.Challenge, r.ChallengePercent,
+			r.Min, r.Max)
 	}
 }
