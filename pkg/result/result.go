@@ -4,8 +4,9 @@ import (
 	"crypto/rand"
 	"fmt"
 	"io"
-	"math"
 	"math/big"
+
+	"github.com/montanaflynn/stats"
 )
 
 type Result struct {
@@ -24,25 +25,19 @@ func init() {
 }
 
 func DoWork() Result {
-	var n uint64
-
-	var min, max uint64
-	min = math.MaxUint64
 
 	var challenge, champion uint64
 
-	for ; n < 1000; n++ {
+	var population []float64
+
+	for i := 0; i < 1000; i++ {
+
+		// Get random integer between 0 and 99
 		ri, _ := rand.Int(rand.Reader, percentage)
 
-		n := ri.Uint64()
+		n := uint(ri.Uint64())
 
-		if n < min {
-			min = n
-		}
-
-		if n > max {
-			max = n
-		}
+		population = append(population, float64(n))
 
 		if n < 30 {
 			challenge++
@@ -50,14 +45,26 @@ func DoWork() Result {
 			champion++
 		}
 	}
+
 	sum := challenge + champion
+
+	min, err := stats.Min(population)
+	if err != nil {
+		panic(err)
+	}
+
+	max, err := stats.Max(population)
+	if err != nil {
+		panic(err)
+	}
+
 	return Result{
 		Champion:         champion,
 		ChampionPercent:  float64(champion) / float64(sum) * 100.0,
 		Challenge:        challenge,
 		ChallengePercent: float64(challenge) / float64(sum) * 100.0,
-		Min:              min,
-		Max:              max,
+		Min:              uint64(min),
+		Max:              uint64(max),
 	}
 }
 
